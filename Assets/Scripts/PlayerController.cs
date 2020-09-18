@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public float currentSpeed;
     public float slowSpeed, normalSpeed;
     float WPradius = .5f;
+    public GameObject rectParticle;
 
     void Update()
     {
@@ -26,10 +27,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             currentSpeed = slowSpeed;
+            rectParticle.GetComponent<ParticleSystem>().Play();
         }
         else if (Input.GetMouseButtonUp(0))
         {
             currentSpeed = normalSpeed;
+            rectParticle.GetComponent<ParticleSystem>().Stop();
         }
 
         if (Mathf.Abs(waypoints[current].transform.position.x - transform.position.x) < WPradius)

@@ -39,10 +39,10 @@ public class SC_GroundGenerator : MonoBehaviour
     {
         // Move the object upward in world space x unit/second.
         //Increase speed the higher score we get
-        if (!GameManager.Instance.isGameOver && GameManager.Instance.isGameStarted)
-        {
+        //if (!GameManager.Instance.isGameOver && GameManager.Instance.isGameStarted)
+        //{
             transform.Translate(-spawnedTiles[0].transform.forward * Time.deltaTime * movingSpeed, Space.World);
-        }
+        //}
 
         if (mainCamera.WorldToViewportPoint(spawnedTiles[0].endPoint.position).z < 0)
         {
@@ -51,24 +51,6 @@ public class SC_GroundGenerator : MonoBehaviour
             spawnedTiles.RemoveAt(0);
             tileTmp.transform.position = spawnedTiles[spawnedTiles.Count - 1].endPoint.position - tileTmp.startPoint.localPosition;
             spawnedTiles.Add(tileTmp);
-        }
-
-        if (GameManager.Instance.isGameOver || !GameManager.Instance.isGameStarted)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (GameManager.Instance.isGameOver)
-                {
-                    //Restart current scene
-                    Scene scene = SceneManager.GetActiveScene();
-                    SceneManager.LoadScene(scene.name);
-                }
-                else
-                {
-                    //Start the game
-                    GameManager.Instance.isGameStarted = true;
-                }
-            }
         }
     }
 }

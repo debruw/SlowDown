@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return _instance; } }
 
     int currentLevel = 0;
-    int maxLevelNumber = 19;
+    int maxLevelNumber = 2;
     public GameObject soundManager;
     public GameObject currentLevelObject;
     public bool isGameStarted, isGameOver;
@@ -20,9 +20,8 @@ public class GameManager : MonoBehaviour
     public int currentScore, highestScore;
 
     #region UIElements
-    //public GameObject NextBttn;
     public Text LevelText, NextLevelText;
-    //public GameObject VibrationButton;
+    public GameObject VibrationButton;
     public GameObject GameWinPanel, StartPanel, InGamePanel, GameLosePanel;
     public Text currentScoreText;
     public Slider LevelSlider;
@@ -56,20 +55,29 @@ public class GameManager : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("UseMenu").Equals(1) || !PlayerPrefs.HasKey("UseMenu"))
         {
-            //MenuPanel.SetActive(true);
+            StartPanel.SetActive(true);
             PlayerPrefs.SetInt("UseMenu", 1);
         }
         else if (PlayerPrefs.GetInt("UseMenu").Equals(0))
         {
-            //inGamePanel.GetComponent<Animator>().SetTrigger("ComeIn");
-            //Ball.GetComponent<BallController>().canMove = true;
-            //magnet.GetComponent<Animator>().enabled = false;
+            InGamePanel.SetActive(true);
         }
 
         if (!PlayerPrefs.HasKey("VIBRATION"))
         {
             PlayerPrefs.SetInt("VIBRATION", 1);
-            //VibrationButton.GetComponent<Image>().sprite = on;
+            VibrationButton.GetComponent<Image>().sprite = on;
+        }
+        else
+        {
+            if(PlayerPrefs.GetInt("VIBRATION") == 1)
+            {
+                VibrationButton.GetComponent<Image>().sprite = on;
+            }
+            else
+            {
+                VibrationButton.GetComponent<Image>().sprite = off;
+            }
         }
         if (SoundManager.Instance == null)
         {
@@ -109,6 +117,7 @@ public class GameManager : MonoBehaviour
 
     public void GameWin()
     {
+        NextLevelText.GetComponentInParent<Image>().color = Color.white;
         currentScore = 0;
         Debug.Log("Game Win");
         isGameStarted = false;
@@ -118,8 +127,10 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("LevelId", currentLevel);
     }
 
+    public Color grayColor;
     public void GameLose()
     {
+        NextLevelText.GetComponentInParent<Image>().color = grayColor;
         currentScore = 0;
         Debug.Log("Game Lose");
         GameLosePanel.SetActive(true);
@@ -163,10 +174,9 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.GetInt("VIBRATION") == 1)
             TapticManager.Impact(ImpactFeedback.Light);
         PlayerPrefs.SetInt("UseMenu", 0);
-        //SceneManager.LoadScene("Scene_Game");
         InitializeLevel();
         GameWinPanel.SetActive(false);
-        isGameStarted = true; 
+        isGameStarted = true;
         isGameOver = false;
         ChangeColor(currentColor++);
     }
@@ -177,12 +187,12 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.GetInt("VIBRATION").Equals(1))
         {//Vibration is on
             PlayerPrefs.SetInt("VIBRATION", 0);
-            //VibrationButton.GetComponent<Image>().sprite = off;
+            VibrationButton.GetComponent<Image>().sprite = off;
         }
         else
         {//Vibration is off
             PlayerPrefs.SetInt("VIBRATION", 1);
-            //VibrationButton.GetComponent<Image>().sprite = on;
+            VibrationButton.GetComponent<Image>().sprite = on;
         }
 
         if (PlayerPrefs.GetInt("VIBRATION") == 1)
