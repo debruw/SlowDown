@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return _instance; } }
 
     int currentLevel = 0;
-    int maxLevelNumber = 2;
+    int maxLevelNumber = 19;
     public GameObject soundManager;
     public GameObject currentLevelObject;
     public bool isGameStarted, isGameOver;
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
     public void InitializeLevel()
     {
         //TODO Test için konuldu kaldırılacak
-        //currentLevel = 64;
+        currentLevel = 14;
 
         if (currentLevel > maxLevelNumber)
         {
@@ -136,7 +136,6 @@ public class GameManager : MonoBehaviour
         GameLosePanel.SetActive(true);
         isGameOver = true;
         isGameStarted = false;
-        Destroy(currentLevelObject);
     }
 
     public void AddScore()
@@ -146,6 +145,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Add score : " + (currentLevel + 1));
             currentScore += (currentLevel + 1);
             currentScoreText.text = currentScore.ToString();
+            currentScoreText.GetComponent<Animation>().Play();
             LevelSlider.value = (float)currentScore;
             if (currentScore >= currentTargetScore)
             {

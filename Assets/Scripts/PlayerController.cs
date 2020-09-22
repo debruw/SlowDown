@@ -69,5 +69,12 @@ public class PlayerController : MonoBehaviour
             }
             GameManager.Instance.AddScore();
         }
+        else if(other.CompareTag("Obstacle"))
+        {
+            Debug.Log("hit");
+            Instantiate(playerExplotionPrefab, transform.position, Quaternion.identity);
+            GameManager.Instance.GameLose();
+            Destroy(gameObject);
+        }
     }
 }
