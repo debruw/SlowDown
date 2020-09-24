@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     public void InitializeLevel()
     {
         //TODO Test için konuldu kaldırılacak
-        currentLevel = 0;
+        //currentLevel = 19;
 
         if (currentLevel > maxLevelNumber)
         {

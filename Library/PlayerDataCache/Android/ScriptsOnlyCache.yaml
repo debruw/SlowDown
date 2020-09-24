@@ -5,6 +5,8 @@ ScriptsOnlyBuild:
     - Explosion
     - GameManager
     - LevelObject
+    - MovingObject
+    - ObstacleFallingCube
     - PlayerController
     - SC_GroundGenerator
     - SC_PlatformTile
@@ -49,6 +51,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 54
       Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
     - Class: 74
@@ -56,6 +60,8 @@ ScriptsOnlyBuild:
     - Class: 81
       Script: {instanceID: 0}
     - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
       Script: {instanceID: 0}
     - Class: 89
       Script: {instanceID: 0}
@@ -68,6 +74,8 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
+      Script: {instanceID: 0}
+    - Class: 111
       Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 9688}
@@ -90,22 +98,28 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10762}
     - Class: 114
-      Script: {instanceID: 11002}
+      Script: {instanceID: 10772}
     - Class: 114
-      Script: {instanceID: 11060}
+      Script: {instanceID: 11004}
     - Class: 114
-      Script: {instanceID: 11124}
+      Script: {instanceID: 11062}
     - Class: 114
-      Script: {instanceID: 11408}
+      Script: {instanceID: 11126}
     - Class: 114
-      Script: {instanceID: 11426}
+      Script: {instanceID: 11358}
     - Class: 114
-      Script: {instanceID: 11442}
+      Script: {instanceID: 11412}
+    - Class: 114
+      Script: {instanceID: 11430}
+    - Class: 114
+      Script: {instanceID: 11446}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
       Script: {instanceID: 0}
     - Class: 135
+      Script: {instanceID: 0}
+    - Class: 136
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -252,7 +266,7 @@ ScriptsOnlyBuild:
     className: PhysicsRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 8f83bca2293f2dbbe1ef877b6885728e
+      Hash: 9e2710af698300e9d5aebbb8a42bbf68
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LevelObject
@@ -342,7 +356,7 @@ ScriptsOnlyBuild:
     className: ColorData
   - hash:
       serializedVersion: 2
-      Hash: fae1547d68cf5e2e9fcfa1801cf9f49e
+      Hash: 89b47183f19cf875ae7c37485784f771
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -444,6 +458,12 @@ ScriptsOnlyBuild:
     className: SoundManager
   - hash:
       serializedVersion: 2
+      Hash: d76e65997f60bc7defdb07a4b982e053
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MovingObject
+  - hash:
+      serializedVersion: 2
       Hash: 783f593b9380cf72d0f7ebfd4a0d4bcd
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -528,7 +548,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: ed522a2f0e7d8ca3f303a3e46097c2d7
+      Hash: 164b61d192ffc7bfe4628dff2fe6cc20
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -580,6 +600,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: 
     className: AndroidNativeFunctions
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ObstacleFallingCube
   - hash:
       serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268

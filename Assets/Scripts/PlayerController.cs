@@ -33,6 +33,10 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && !isPowerUpActive)
         {
+            if (GameManager.Instance.tutorial0.activeSelf)
+            {
+                GameManager.Instance.tutorial0.SetActive(false);
+            }
             currentSpeed = slowSpeed;
             SoundManager.Instance.playSound(SoundManager.GameSounds.Slow);
             rectParticle.GetComponent<ParticleSystem>().Play();
