@@ -15,6 +15,11 @@ public class SoundManager : MonoBehaviour
     public enum GameSounds
     {
         Music,
+        Hit,
+        Lose,
+        Score,
+        Win,
+        Slow
     }
 
     private void Awake()
@@ -47,5 +52,13 @@ public class SoundManager : MonoBehaviour
     public void stopSound(GameSounds soundType)
     {
         gameSoundsList[(int)soundType].Stop();
+    }
+
+    public void StopAllSounds()
+    {
+        for (int i = 1; i < gameSoundsList.Length; i++)
+        {
+            stopSound((GameSounds)i);
+        }
     }
 }

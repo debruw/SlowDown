@@ -17,14 +17,17 @@ public class GameManager : MonoBehaviour
     public GameObject currentLevelObject;
     public bool isGameStarted, isGameOver;
     public int currentTargetScore;
-    public int currentScore, highestScore;
+    public int currentScore, bestScore, currentBestScore;
 
     #region UIElements
     public Text LevelText, NextLevelText;
     public GameObject VibrationButton;
     public GameObject GameWinPanel, StartPanel, InGamePanel, GameLosePanel;
-    public Text currentScoreText;
+    public Text BestScoreText;
     public Slider LevelSlider;
+    public Text highestScoreText;
+
+    public GameObject tutorial0;
     #endregion
 
     private void Awake()
@@ -45,13 +48,13 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("LevelId", currentLevel);
         }
-        if (PlayerPrefs.HasKey("HighScore"))
+        if (PlayerPrefs.HasKey("HighestScore"))
         {
-            highestScore = PlayerPrefs.GetInt("HighScore");
+            bestScore = PlayerPrefs.GetInt("HighestScore");
         }
         else
         {
-            PlayerPrefs.SetInt("HighScore", highestScore);
+            PlayerPrefs.SetInt("HighestScore", bestScore);
         }
         if (PlayerPrefs.GetInt("UseMenu").Equals(1) || !PlayerPrefs.HasKey("UseMenu"))
         {
@@ -70,7 +73,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if(PlayerPrefs.GetInt("VIBRATION") == 1)
+            if (PlayerPrefs.GetInt("VIBRATION") == 1)
             {
                 VibrationButton.GetComponent<Image>().sprite = on;
             }
@@ -83,14 +86,14 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(soundManager);
         }
-        currentScoreText.text = currentScore.ToString();
+        BestScoreText.text = currentScore.ToString();
         InitializeLevel();
     }
 
     public void InitializeLevel()
     {
         //TODO Test için konuldu kaldırılacak
-        currentLevel = 14;
+        currentLevel = 0;
 
         if (currentLevel > maxLevelNumber)
         {
@@ -107,7 +110,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("Level : " + currentLevel);
             currentLevelObject = Instantiate(Resources.Load("Level" + currentLevel), new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         }
-        ChangeColor(currentLevel);
+        InGamePanel.SetActive(true);
+        bestScore = PlayerPrefs.GetInt("HighestScore");
+        currentColor = currentLevel;
+        ChangeColor(currentColor);
         currentTargetScore = currentLevelObject.GetComponent<LevelObject>().targetScore;
         LevelSlider.maxValue = currentTargetScore;
         LevelText.text = (currentLevel + 1).ToString();
@@ -117,6 +123,8 @@ public class GameManager : MonoBehaviour
 
     public void GameWin()
     {
+        SoundManager.Instance.StopAllSounds();
+        SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
         NextLevelText.GetComponentInParent<Image>().color = Color.white;
         currentScore = 0;
         Debug.Log("Game Win");
@@ -125,27 +133,46 @@ public class GameManager : MonoBehaviour
         Destroy(currentLevelObject);
         currentLevel++;
         PlayerPrefs.SetInt("LevelId", currentLevel);
+
+        if (PlayerPrefs.GetInt("VIBRATION") == 1)
+            TapticManager.Impact(ImpactFeedback.Light);
     }
 
     public Color grayColor;
     public void GameLose()
     {
-        NextLevelText.GetComponentInParent<Image>().color = grayColor;
+        if(currentBestScore > PlayerPrefs.GetInt("HighestScore"))
+        {
+            PlayerPrefs.SetInt("HighestScore", currentBestScore);
+        }
+        InGamePanel.SetActive(false);
+        BestScoreText.text = currentBestScore.ToString();
+        currentBestScore = 0;
+        highestScoreText.text = "Best : " + PlayerPrefs.GetInt("HighestScore");
+        SoundManager.Instance.StopAllSounds();
+        SoundManager.Instance.playSound(SoundManager.GameSounds.Lose);
+        //NextLevelText.GetComponentInParent<Image>().color = grayColor;
         currentScore = 0;
         Debug.Log("Game Lose");
         GameLosePanel.SetActive(true);
         isGameOver = true;
         isGameStarted = false;
+        if (PlayerPrefs.GetInt("VIBRATION") == 1)
+            TapticManager.Impact(ImpactFeedback.Light);
     }
 
     public void AddScore()
     {
         if (isGameStarted && !isGameOver)
         {
+            if (PlayerPrefs.GetInt("VIBRATION") == 1)
+                TapticManager.Impact(ImpactFeedback.Light);
             Debug.Log("Add score : " + (currentLevel + 1));
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Score);
             currentScore += (currentLevel + 1);
-            currentScoreText.text = currentScore.ToString();
-            currentScoreText.GetComponent<Animation>().Play();
+            currentBestScore += (currentLevel + 1);
+            BestScoreText.text = currentBestScore.ToString();
+            BestScoreText.GetComponent<Animation>().Play();
             LevelSlider.value = (float)currentScore;
             if (currentScore >= currentTargetScore)
             {
@@ -167,6 +194,10 @@ public class GameManager : MonoBehaviour
     public void TapToStartButtonClick()
     {
         isGameStarted = true;
+        if (currentLevel == 0)
+        {
+            tutorial0.SetActive(true);
+        }
     }
 
     public void TapToNextButtonClick()
@@ -205,7 +236,7 @@ public class GameManager : MonoBehaviour
     public void ChangeColor(int clr)
     {
         currentColor = clr;
-        if (currentColor > 3)
+        if (currentColor > 9)
         {
             currentColor = 0;
         }

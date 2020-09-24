@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetScore: 10
-  speed: 0
+  speed: 3
   levelObstacles:
   - {fileID: 4567415524289282040}
   - {fileID: 388530772204004216}

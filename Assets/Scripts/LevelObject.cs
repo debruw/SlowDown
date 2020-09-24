@@ -24,7 +24,10 @@ public class LevelObject : MonoBehaviour
         }
         foreach (GameObject item in levelObstacles)
         {
-            item.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -3);
+            if (item != null)
+            {
+                item.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -speed);
+            }
         }
     }
 }

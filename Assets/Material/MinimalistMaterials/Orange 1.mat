@@ -132,7 +132,7 @@ Material:
     - _ShadowInfluence: 0
     - _ShowAO: 0
     - _ShowAmbientSettings: 0
-    - _ShowBack: 0
+    - _ShowBack: 1
     - _ShowBottom: 0
     - _ShowColorCorrection: 0
     - _ShowCustomShading: 1
@@ -140,10 +140,10 @@ Material:
     - _ShowFront: 0
     - _ShowGlobalGradientSettings: 0
     - _ShowLMap: 0
-    - _ShowLeft: 0
+    - _ShowLeft: 1
     - _ShowRight: 0
     - _ShowTexture: 0
-    - _ShowTop: 0
+    - _ShowTop: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
